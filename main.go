@@ -1,10 +1,14 @@
 package main
 
 import (
+	"bytes"
+	"encoding/json"
 	"fmt"
+	"io"
 	"math/rand"
 	"sort"
 	"strings"
+	"unicode"
 )
 
 func main() {
@@ -127,4 +131,36 @@ func pairNumbers() {
 			fmt.Println(i)
 		}
 	}
+}
+
+/*-----------------Basic Go Certification-----------------*/
+
+func ModifyString(str string) string {
+	var result string
+	for _, char := range str {
+		if !unicode.IsDigit(char) && !unicode.IsSpace(char) {
+			result += string(char)
+		}
+	}
+	runes := []rune(result)
+	for i, r := 0, len(runes)-1; i < r; i, r = i+1, r-1 {
+		runes[i], runes[r] = runes[r], runes[i]
+	}
+	return string(runes)
+}
+
+type Manager struct {
+	FullName       string `json:"full_name,omitempty"`
+	Position       string `json:"position,omitempty"`
+	Age            int32  `json:"age,omitempty"`
+	YearsInCompany int32  `json:"years_in_company,omitempty"`
+}
+
+func EncodeManager(manager *Manager) (io.Reader, error) {
+	sb, err := json.Marshal(manager)
+	if err != nil {
+		return nil, err
+	}
+	b := bytes.NewBuffer(sb)
+	return b, err
 }
