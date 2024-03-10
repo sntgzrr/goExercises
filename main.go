@@ -12,13 +12,15 @@ import (
 )
 
 func main() {
-
+	
 }
 
-func invertString(s string) {
+func invertString(s string) string {
+	var inverted string
 	for i := 0; i < len(s); i++ {
-		fmt.Print(string(s[len(s)-i-1]))
+		inverted += string(s[len(s)-1-i])
 	}
+	return inverted
 }
 
 func charCounter(s string) {
